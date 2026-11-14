@@ -1,2 +1,39 @@
-# Doestime
-Drug time
+name: Build Dose Time APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Generate Flutter Project and Build APK
+        run: |
+          flutter create app_build --project-name dosetime --org com.adamvision.dosetime
+          cp main.dart app_build/lib/main.dart
+          cd app_build
+          flutter pub add shared_preferences
+          flutter build apk --release
+
+      - name: Upload APK for Download
+        uses: actions/upload-artifact@v4
+        with:
+          name: DoseTime-APK
+          path: app_build/build/app/outputs/flutter-apk/app-release.apk
+ 
