@@ -12,8 +12,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v5
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -35,5 +35,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: DoseTime-APK
-          path: app_build/build/app/outputs/flutter-apk/app-release.apk
- 
+          path: app_build/build/app/outputs/flutter-apk/app-release.apk 
